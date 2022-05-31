@@ -9,38 +9,32 @@ public class playerMovement : MonoBehaviour
     int JumpForce = 5;
     bool hasJump = true;
     Rigidbody rb;
-    bool sePuedeMover = true;
-    int vidas = 3;
-    public Text gameOver;
-    public Text corazones;
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        gameOver.enabled = false;
         
     }
 
     void Update()
     {
-        corazones.text = vidas.ToString();
-        if (Input.GetKey(KeyCode.W) && sePuedeMover)
+        if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(0,0,movement);
         }
-        if (Input.GetKey(KeyCode.S) && sePuedeMover)
+        if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(0, 0, -movement);
         }
-        if (Input.GetKey(KeyCode.A) && sePuedeMover)
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(0, -rotation, 0);
         }
-        if (Input.GetKey(KeyCode.D) && sePuedeMover)
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(0, rotation, 0);
         }
-         if (Input.GetKeyDown(KeyCode.Space) && sePuedeMover)
+         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (hasJump)
             {
@@ -48,32 +42,16 @@ public class playerMovement : MonoBehaviour
                 hasJump = false;
             }
         }
-         if(transform.position.y < 0)
-        {
-            transform.position = new Vector3(0, 1, 0);
-            vidas--;
-        }
         
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name == "Plane")
-        {
-            hasJump = true;
-        }
-        if (collision.gameObject.name == "Obstacle")
-        {
-            transform.position = new Vector3(0, 1, 0);
-            vidas--;
-        }
-        if(vidas == 0)
-        {
-            transform.eulerAngles = new Vector3(0,0,0);
-            sePuedeMover = false;
-            gameOver.enabled = true;
-            gameOver.text = "GameOver";
-        }
+        if(collision.gameObject.name == "Plataforma")
+            {
+                hasJump = true;
+            }   
     }
+ }
 
-}
+
